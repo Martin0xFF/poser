@@ -10,9 +10,6 @@ class pose_estimator():
         self.cap = cap
         self.scale_factor = scale_factor
 
-
-
-
     def infer_overlay(self,):
 
         input_image, display_image, output_scale = posenet.read_cap(
