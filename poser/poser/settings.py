@@ -11,16 +11,18 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
-
+import json
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
+with open('config.json','r') as f:
+    config = json.load(f) 
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'v3b!(k2f4v0z^2h^kfy&taa!!%v+2l5kzv9o1666d0nf3#jh23'
+SECRET_KEY = config["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
