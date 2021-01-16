@@ -4,6 +4,10 @@ __pycache__/
 *$py.class
 *.json
 
+
+*.key
+*.pem
+*.cert
 # C extensions
 *.so
 

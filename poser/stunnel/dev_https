@@ -1,0 +1,11 @@
+pid=
+
+cert = stunnel/stunnel.pem
+#sslVersion = TSLv1.2
+foreground = yes
+output = stunnel.log
+
+[https]
+accept=6969
+connect=8001
+TIMEOUTclose=1
