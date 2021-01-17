@@ -13,6 +13,52 @@ const constraints = window.constraints = {
   video: true
 };
 
+function sleep(milliseconds) {
+  const date = Date.now();
+  let currentDate = null;
+  do {
+    currentDate = Date.now();
+  } while (currentDate - date < milliseconds);
+}
+
+
+
+window.onload = window.onresize = function() {
+  var canvas = document.getElementById('canvas');
+  canvas.width = window.innerWidth * 0.8;
+  canvas.height = window.innerHeight * 0.8;
+}
+
+
+function takepicture() {
+  const video = document.querySelector('video');
+  var canvas = document.getElementById('canvas');
+  var context = canvas.getContext('2d');
+
+      if (canvas.width && canvas.height) {
+        canvas.width = video.videoWidth*0.5;
+        canvas.height = video.videoHeight*0.5;
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        /*
+        canvas.toBlob(function(blob){
+          var a = document.createElement("a");
+          document.body.appendChild(a);
+          a.style = "display: none";
+          a.href = url;
+          a.download =_generateGuid();
+          a.click();
+          window.URL.revokeObjectURL(url);
+        });
+        */
+        //canvas.style = "display:none"
+        var data = canvas.toDataURL('image/png');
+        var photo = document.getElementById('photo');
+        photo.setAttribute('src', data);
+        photo.style = "display:none"
+        }
+}
+
+
 function handleSuccess(stream) {
   const video = document.querySelector('video');
   const videoTracks = stream.getVideoTracks();
@@ -20,6 +66,8 @@ function handleSuccess(stream) {
   console.log(`Using video device: ${videoTracks[0].label}`);
   window.stream = stream; // make variable available to browser console
   video.srcObject = stream;
+  video.style = "display:none;"
+  setInterval(() => { takepicture(); }, 1000/30);
 }
 
 function handleError(error) {

@@ -1,0 +1,56 @@
+{% load bootstrap4 %}
+{% load static %}
+<html>
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="description" content="POSER">
+        <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1, maximum-scale=1">
+        <meta itemprop="description" content="Poser Physio">
+
+        <meta itemprop="name" content="Swagger">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta id="theme-color" name="theme-color" content="#ffffff">
+
+        <base target="_blank">
+
+        <title>Poser!</title>
+
+          <!-- Material Design for Bootstrap -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.16/css/mdb.min.css" rel="stylesheet">
+
+        <link rel="icon" sizes="192x192" href="../../../images/webrtc-icon-192x192.png">
+        <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="{% static 'main.css' %}">
+
+    </head>
+
+    <body>
+        <div class="container">
+            <div id="container">
+                <div class="d-flex p-2">
+                    <h1><span>Session {{ session_id }}</span></h1>
+                </div>
+                <video id="gum-local" style="display:none"  autoplay playsinline></video>
+                <div id="errorMsg"></div>
+            </div>
+        </div>
+
+    <div class="continater">
+        <canvas id="canvas" class ="d-flex p-2" ></canvas>
+    </div>
+
+    <div class="d-flex">
+        <img id="photo" style="display:none" alt="The screen capture will appear in this box.">
+    </div>
+    <div class="container m-2">
+        <button id="showVideo">Start Session!</button>
+    </div>
+
+    <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+    <script src="{% static 'main.js' %}"></script>
+
+    <script src="{% static 'lib/ga.js' %}"></script>
+
+    </body>
+    </html>

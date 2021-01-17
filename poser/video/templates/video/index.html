@@ -1,52 +1,25 @@
+{% extends "poser/base.html" %}
+{% block content %}
+{% load icons %}
 {% load static %}
-<html>
-    <head>
+<div class="container center">
+    <div class="row">
+        {% for item in seshs %}
+            <div class="col-md-4 mt-4">
+            <div class="card bg-dark text-light ">
+                <div class='card-body color-white'>
+                    <h2 class="card-title ">
+                        Session {{ item.pk }}:
+                    </h2>
+                    <h6 class="card-subtitle mt-n2 text-capitalize">{{ item.sesh_date|date:'b d, Y' }}</h6>
+                    <h2 class="card-title mb-1">
+                        <div class="badge badge-light">Score {{ item.score }}</div>
+                    </h2>
 
-        <meta charset="utf-8">
-        <meta name="description" content="POSER">
-        <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1, maximum-scale=1">
-        <meta itemprop="description" content="Poser Physio">
-
-        <meta itemprop="name" content="Swagger">
-        <meta name="mobile-web-app-capable" content="yes">
-        <meta id="theme-color" name="theme-color" content="#ffffff">
-
-        <base target="_blank">
-
-        <title>Video Viewer</title>
-
-        <link rel="icon" sizes="192x192" href="../../../images/webrtc-icon-192x192.png">
-        <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" href="{% static 'main.css' %}">
-
-    </head>
-
-    <body>
-
-    <div id="container">
-        <h1><a href="#">Poser</a>
-            <span>getUserMedia</span></h1>
-
-        <video id="gum-local" autoplay playsinline></video>
-        <button id="showVideo">Open camera</button>
-
-        <div id="errorMsg"></div>
-
-        <p class="warning"><strong>Warning:</strong> if you're not using headphones, pressing play will cause feedback.</p>
-
-        <p>Display the video stream from <code>getUserMedia()</code> in a video element.</p>
-
-        <p>The <code>MediaStream</code> object <code>stream</code> passed to the <code>getUserMedia()</code> callback is in
-            global scope, so you can inspect it from the console.</p>
-
-        <a href="https://github.com/webrtc/samples/tree/gh-pages/src/content/getusermedia/gum"
-           title="View source for this page on GitHub" id="viewSource">View source on GitHub</a>
+                </div>
+                    </div>
+                </div>
+            {% endfor %}
     </div>
-
-    <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
-    <script src="{% static 'main.js' %}"></script>
-
-    <script src="{% static 'lib/ga.js' %}"></script>
-
-    </body>
-    </html>
+</div>
+{% endblock %}

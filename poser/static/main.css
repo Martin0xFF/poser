@@ -69,9 +69,12 @@
 
   canvas {
     background-color: #ccc;
-    max-width: 100%;
-    width: 100%;
-  }
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    }
 
   code {
     font-family: 'Roboto', sans-serif;

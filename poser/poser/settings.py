@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap4',
     'django_icons',
-    'video'
+    'video.apps.VideoConfig'
 ]
 
 MIDDLEWARE = [
@@ -109,7 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'EST'
 
 USE_I18N = True
 
@@ -123,9 +123,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
-     '/var/www/static/',
-)
+if DEBUG is False:
+    STATIC_ROOT = os.path.join(BASE_DIR,'static')
+else:
+    STATICFILES_DIRS = (
+        os.path.join(BASE_DIR, "static"),
+        '/var/www/static/',
+    )
 
 
