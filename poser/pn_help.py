@@ -1,19 +1,22 @@
 import posenet
 import torch
 import cv2
+import base64
+import numpy as np
 
 class pose_estimator():
-    def __init__(self, cap, model=101, scale_factor=0.7125):
+    def __init__(self, img_q, model=101, scale_factor=0.7125):
         self.model = posenet.load_model(model)
         self.model = self.model.cuda()
         self.output_stride = self.model.output_stride
-        self.cap = cap
         self.scale_factor = scale_factor
+        self.latest = None
+        self.img_q = img_q
 
     def infer_overlay(self,):
-
-        input_image, display_image, output_scale = posenet.read_cap(
-            self.cap, scale_factor=self.scale_factor, output_stride=self.output_stride)
+        current_img = self.img
+        input_image, display_image, output_scale = posenet._process_input(
+            self.img_q[0], scale_factor=self.scale_factor, output_stride=self.output_stride)
 
         with torch.no_grad():
             input_image = torch.Tensor(input_image).cuda()
@@ -33,4 +36,19 @@ class pose_estimator():
         display_image, pose_scores, keypoint_scores, keypoint_coords,
         min_pose_score=0.15, min_part_score=0.1)
         ret, jpeg = cv2.imencode('.jpg', overlay_image)
+        self.latest = jpeg.tobytes()
         return jpeg.tobytes()
+
+def gen(queue):
+
+    """
+    When ever you call this, make sure to replace the current element of queue with
+    """
+    pe = pose_estimator(queue)
+
+    while True:
+        im_bytes = base64.b64decode(queue[0])
+        im_arr = np.frombuffer(im_bytes, dtype=np.uint8)
+        pe.img_q[0] = cv2.imdecode(im_arr, flags=cv2.IMREAD_COLOR)
+
+    yield

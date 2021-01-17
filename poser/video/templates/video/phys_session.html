@@ -22,7 +22,6 @@
         <link rel="icon" sizes="192x192" href="../../../images/webrtc-icon-192x192.png">
         <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="{% static 'main.css' %}">
-
     </head>
 
     <body>
@@ -30,12 +29,16 @@
             <div id="container">
                 <div class="d-flex p-2">
                     <h1><span>Session {{ session_id }}</span></h1>
+
                 </div>
-                <video id="gum-local" style="display:none"  autoplay playsinline></video>
+                    <video id="target" type="video/mp4" controls playsinline></video>
+                <div id="errorMsg"></div>
+
+                </div>
+                <video id="user" style="display:none"  autoplay playsinline></video>
                 <div id="errorMsg"></div>
             </div>
         </div>
-
     <div class="continater">
         <canvas id="canvas" class ="d-flex p-2" ></canvas>
     </div>
@@ -43,8 +46,9 @@
     <div class="d-flex">
         <img id="photo" style="display:none" alt="The screen capture will appear in this box.">
     </div>
+
     <div class="container m-2">
-        <button id="showVideo">Start Session!</button>
+        <button id="showVideo" data-video-url='{% static "example.mp4" %}'>Start Session!</button>
     </div>
 
     <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>

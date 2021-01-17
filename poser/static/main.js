@@ -31,13 +31,20 @@ window.onload = window.onresize = function() {
 
 
 function takepicture() {
-  const video = document.querySelector('video');
+  const video = document.querySelector('#user'); // User video
+  const tar_video = document.querySelector('#target');
   var canvas = document.getElementById('canvas');
   var context = canvas.getContext('2d');
+  var xhr = new XMLHttpRequest();
 
       if (canvas.width && canvas.height) {
-        canvas.width = video.videoWidth*0.5;
-        canvas.height = video.videoHeight*0.5;
+
+
+        canvas.width = tar_video.videoWidth*0.5;
+        canvas.height = tar_video.videoHeight*0.5;
+        context.drawImage(tar_video, 0, 0, canvas.width, canvas.height);
+        var tar_data = canvas.toDataURL('image/png');
+
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
         /*
         canvas.toBlob(function(blob){
@@ -52,22 +59,44 @@ function takepicture() {
         */
         //canvas.style = "display:none"
         var data = canvas.toDataURL('image/png');
-        var photo = document.getElementById('photo');
-        photo.setAttribute('src', data);
-        photo.style = "display:none"
+
+        // Now target
+
+
+        //var photo = document.getElementById('photo');
+        //photo.setAttribute('src', data);
+        photo.style = "display:none";
+        xhr.open("POST", "/video/update/", true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({
+            value: data,
+            tar_value: tar_data
+        }));
+        xhr.open("GET", "/video/collect/", false);
+        xhr.send();
+        var resp = JSON.parse(xhr.responseText)
+        console.log(resp)
+
+        if ("score" in resp){
+          console.log(resp);
+        }
         }
 }
 
 
 function handleSuccess(stream) {
-  const video = document.querySelector('video');
+  const video = document.querySelector('#user');
   const videoTracks = stream.getVideoTracks();
+  const tar_video = document.querySelector('#target');
+  tar_video.src = document.querySelector('#showVideo').getAttribute("data-video-url");
+  tar_video.load();
   console.log('Got stream with constraints:', constraints);
   console.log(`Using video device: ${videoTracks[0].label}`);
   window.stream = stream; // make variable available to browser console
   video.srcObject = stream;
   video.style = "display:none;"
-  setInterval(() => { takepicture(); }, 1000/30);
+  tar_video.play();
+  setInterval(() => { takepicture(); }, 1000/10);
 }
 
 function handleError(error) {
